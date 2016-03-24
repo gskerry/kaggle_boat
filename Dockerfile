@@ -7,11 +7,14 @@ RUN chmod +x /usr/bin/tini
 ENTRYPOINT ["/usr/bin/tini", "--"]
 
 RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q python-all python-pip build-essential python-dev python-matplotlib
+RUN DEBIAN_FRONTEND=noninteractive 
+RUN apt-get install -y -q build-essential python-all python-dev libpython-dev libevent-dev python-matplotlib
 
-# ADD ./requirements.txt /tmp/requirements.txt
-# RUN pip install -qr /tmp/requirements.txt
-RUN pip install jupyter
+CMD pip install --upgrade pip
+
+ADD ./requirements.txt /tmp/requirements.txt
+RUN pip install -qr /tmp/requirements.txt
+# RUN pip install jupyter
 
 # ADD ./webapp /opt/webapp/
 WORKDIR /opt/py-app
