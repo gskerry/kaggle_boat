@@ -8,16 +8,16 @@ ENTRYPOINT ["/usr/bin/tini", "--"]
 
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive 
-RUN apt-get install -y -q build-essential python-all python-dev libpython-dev libevent-dev python-matplotlib
+RUN apt-get install -y -q build-essential python-all python-dev libpython-dev libevent-dev python-pip python-matplotlib
 
 CMD pip install --upgrade pip
 
-ADD ./requirements.txt /tmp/requirements.txt
-RUN pip install -qr /tmp/requirements.txt
-# RUN pip install jupyter
-
 # ADD ./webapp /opt/webapp/
 WORKDIR /opt/py-app
+
+ADD ./requirements.txt /tmp/requirements.txt
+RUN pip --log /opt/py-app/logs install -qr /tmp/requirements.txt
+# RUN pip install jupyter
 
 EXPOSE 8888
 
