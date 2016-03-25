@@ -8,7 +8,7 @@ ENTRYPOINT ["/usr/bin/tini", "--"]
 
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive 
-RUN apt-get install -y -q build-essential python-all python-dev libpython-dev libevent-dev python-pip python-matplotlib
+RUN apt-get install -y -q build-essential libblas-dev liblapack-dev libatlas-base-dev gfortran libevent-dev python-all python-dev libpython-dev python-pip python-matplotlib
 
 CMD pip install --upgrade pip
 
@@ -16,7 +16,7 @@ CMD pip install --upgrade pip
 WORKDIR /opt/py-app
 
 ADD ./requirements.txt /tmp/requirements.txt
-RUN pip --log /opt/py-app/logs install -qr /tmp/requirements.txt
+RUN sudo pip --log /opt/py-app/logs install -r /tmp/requirements.txt
 # RUN pip install jupyter
 
 EXPOSE 8888
